@@ -86,6 +86,15 @@ func TestRegisterHandlerReturnNoErrorFuncWithOneArg(t *testing.T) {
 	}
 }
 
+func TestUnregisterIllegalFunction(t *testing.T) {
+	eventBus := New()
+	err := eventBus.UnregisterHandler(func() {})
+	err = AssertThat(err, NotNilValue())
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestUnregisterHandler(t *testing.T) {
 	counter := 0
 	eventBus := New()
@@ -97,6 +106,25 @@ func TestUnregisterHandler(t *testing.T) {
 	eventBus.UnregisterHandler(fn)
 	eventBus.Publish(TestEventA{})
 	err := AssertThat(counter, Is(1))
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestUnregisterNotRegisteredFunctionHasNoEffect(t *testing.T) {
+	counter := 0
+	eventBus := New()
+	fnA := func(event TestEventA) {
+		counter++
+	}
+	fnB := func(event TestEventA) {
+		counter++
+	}
+	eventBus.RegisterHandler(fnA)
+	eventBus.Publish(TestEventA{})
+	eventBus.UnregisterHandler(fnB)
+	eventBus.Publish(TestEventA{})
+	err := AssertThat(counter, Is(2))
 	if err != nil {
 		t.Fatal(err)
 	}
