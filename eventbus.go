@@ -23,16 +23,25 @@ func New() *eventBus {
 	return e
 }
 
+func parse(fn interface {}) (reflect.Type, reflect.Value, error) {
+	v := reflect.ValueOf(fn)
+	def := v.Type()
+	if def.NumIn() != 1 {
+		return nil, v, fmt.Errorf("Handler must have a single argument")
+	}
+	argument := def.In(0)
+	return argument, v, nil
+}
+
 func (e *eventBus) RegisterHandler(fn interface {}) error {
 	e.lock.Lock()
 	defer e.lock.Unlock()
 
-	v := reflect.ValueOf(fn)
-	def := v.Type()
-	if def.NumIn() != 1 {
-		return fmt.Errorf("Handler must have a single argument")
+	argument, v, err := parse(fn)
+	if err != nil {
+		return err
 	}
-	argument := def.In(0)
+
 	e.handlers[argument] = append(e.handlers[argument], v)
 	return nil
 }
@@ -41,12 +50,11 @@ func (e *eventBus) UnregisterHandler(fn interface {}) error {
 	e.lock.Lock()
 	defer e.lock.Unlock()
 
-	v := reflect.ValueOf(fn)
-	def := v.Type()
-	if def.NumIn() != 1 {
-		return fmt.Errorf("Handler must have a single argument")
+	argument, v, err := parse(fn)
+	if err != nil {
+		return err
 	}
-	argument := def.In(0)
+
 	handlers := make([]reflect.Value, 0)
 	for _, handler := range e.handlers[argument] {
 		if handler != v {
