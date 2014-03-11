@@ -1,14 +1,14 @@
 package eventbus
 
 import (
-	"reflect"
 	"fmt"
+	"reflect"
 	"sync"
 )
 
 type EventBus interface {
-	RegisterHandler(fn interface {}) error
-	UnregisterHandler(fn interface {}) error
+	RegisterHandler(fn interface{}) error
+	UnregisterHandler(fn interface{}) error
 	Publish(event interface{}) error
 }
 
@@ -23,7 +23,7 @@ func New() *eventBus {
 	return e
 }
 
-func parse(fn interface {}) (reflect.Type, reflect.Value, error) {
+func parse(fn interface{}) (reflect.Type, reflect.Value, error) {
 	v := reflect.ValueOf(fn)
 	def := v.Type()
 	if def.NumIn() != 1 {
@@ -33,7 +33,7 @@ func parse(fn interface {}) (reflect.Type, reflect.Value, error) {
 	return argument, v, nil
 }
 
-func (e *eventBus) RegisterHandler(fn interface {}) error {
+func (e *eventBus) RegisterHandler(fn interface{}) error {
 	e.lock.Lock()
 	defer e.lock.Unlock()
 
@@ -46,7 +46,7 @@ func (e *eventBus) RegisterHandler(fn interface {}) error {
 	return nil
 }
 
-func (e *eventBus) UnregisterHandler(fn interface {}) error {
+func (e *eventBus) UnregisterHandler(fn interface{}) error {
 	e.lock.Lock()
 	defer e.lock.Unlock()
 

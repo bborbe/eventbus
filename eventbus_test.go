@@ -1,8 +1,8 @@
 package eventbus
 
 import (
-	. "github.com/bborbe/assert"
 	"testing"
+	. "github.com/bborbe/assert"
 )
 
 func TestImplements(t *testing.T) {
@@ -14,8 +14,8 @@ func TestImplements(t *testing.T) {
 	}
 }
 
-type TestEventA struct {}
-type TestEventB struct {}
+type TestEventA struct{}
+type TestEventB struct{}
 
 func TestPublishHandlerIsCalledIfTypeIsMatching(t *testing.T) {
 	called := false
