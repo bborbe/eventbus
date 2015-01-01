@@ -2,6 +2,7 @@ package eventbus
 
 import (
 	"testing"
+
 	. "github.com/bborbe/assert"
 )
 
