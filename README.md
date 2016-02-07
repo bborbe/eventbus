@@ -1,4 +1,4 @@
-# eventbus
+# Eventbus
 
 Package provide eventbus in Go
 
