@@ -6,6 +6,10 @@ Package provide eventbus in Go
 
 http://godoc.org/github.com/bborbe/eventbus
 
+# Continuous integration
+
+https://www.benjamin-borbe.de/jenkins/job/Go-EventBus/
+
 ## Copyright and license
 
     Copyright (c) 2016, Benjamin Borbe <bborbe@rocketnews.de>
