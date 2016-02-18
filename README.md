@@ -14,10 +14,6 @@ eventBus.RegisterHandler(func(event TestEventA) {
 eventBus.Publish(TestEventA{})
 ```
 
-## Documentation
-
-http://godoc.org/github.com/bborbe/eventbus
-
 # Continuous integration
 
 https://www.benjamin-borbe.de/jenkins/job/Go-EventBus/
