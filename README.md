@@ -16,7 +16,7 @@ eventBus.Publish(TestEventA{})
 
 # Continuous integration
 
-https://www.benjamin-borbe.de/jenkins/job/Go-EventBus/
+[Jenkins](https://www.benjamin-borbe.de/jenkins/job/Go-EventBus/)
 
 ## Copyright and license
 
