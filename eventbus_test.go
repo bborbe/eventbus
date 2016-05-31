@@ -19,13 +19,43 @@ type TestEventA struct{}
 type TestEventB struct{}
 
 func TestPublishHandlerIsCalledIfTypeIsMatching(t *testing.T) {
-	called := false
+	counter := 0
 	eventBus := New()
 	eventBus.RegisterHandler(func(event TestEventA) {
-		called = true
+		counter++
 	})
 	eventBus.Publish(TestEventA{})
-	err := AssertThat(called, Is(true))
+	eventBus.Publish(TestEventB{})
+	err := AssertThat(counter, Is(1))
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestPublishHandlerIsCalledIfTypeIsMatchingRef(t *testing.T) {
+	counter := 0
+	eventBus := New()
+	eventBus.RegisterHandler(func(event *TestEventA) {
+		counter++
+	})
+	eventBus.Publish(&TestEventA{})
+	eventBus.Publish(&TestEventB{})
+	err := AssertThat(counter, Is(1))
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestPublishHandlerIsCalledIfTypeIsMatchingReturn(t *testing.T) {
+	counter := 0
+	eventBus := New()
+	eventBus.RegisterHandler(func(event TestEventA) error {
+		counter++
+		return nil
+	})
+	eventBus.Publish(TestEventA{})
+	eventBus.Publish(TestEventB{})
+	err := AssertThat(counter, Is(1))
 	if err != nil {
 		t.Fatal(err)
 	}
