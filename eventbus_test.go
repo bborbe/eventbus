@@ -6,7 +6,7 @@ import (
 	. "github.com/bborbe/assert"
 )
 
-func TestImplements(t *testing.T) {
+func TestImplementsEventBus(t *testing.T) {
 	eventBus := New()
 	var i *EventBus
 	err := AssertThat(eventBus, Implements(i).Message("check type"))

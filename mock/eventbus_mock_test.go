@@ -7,7 +7,7 @@ import (
 	"github.com/bborbe/eventbus"
 )
 
-func TestImplements(t *testing.T) {
+func TestImplementsEventBus(t *testing.T) {
 	eventBus := New()
 	var i *eventbus.EventBus
 	err := AssertThat(eventBus, Implements(i).Message("check type"))
