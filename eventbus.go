@@ -5,11 +5,7 @@ import (
 	"reflect"
 	"sync"
 
-	"github.com/bborbe/log"
-)
-
-var (
-	logger = log.DefaultLogger
+	"github.com/golang/glog"
 )
 
 type EventBus interface {
@@ -78,7 +74,7 @@ func (e *eventBus) Publish(event interface{}) error {
 	t := reflect.TypeOf(event)
 	args := [...]reflect.Value{reflect.ValueOf(event)}
 	fns := e.handlers[t]
-	logger.Debugf("publish event %s to %d handlers", t.Name(), len(fns))
+	glog.V(2).Infof("publish event %s to %d handlers", t.Name(), len(fns))
 	for _, fn := range fns {
 		fn.Call(args[:])
 	}
