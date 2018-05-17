@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SOURCEDIRECTORY="github.com/bborbe/eventbus"
+SOURCEDIRECTORY="github.com/bborbe/assert"
 
 ################################################################################
 
